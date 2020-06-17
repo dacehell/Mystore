@@ -21,11 +21,11 @@
                     </div>
                     <!-- product -->
                     <div class="media-content">
-                      <p class="title is-5">{{ p.name }}</p>
-                      <p class="subtitle is-6">$ {{ p.price * p.qty }}</p>
+                      <p class="title is-5">{{ p.data.name }}</p>
+                      <p class="subtitle is-6">$ {{ p.data.price * p.qty }}</p>
                     </div>
                     <p>
-                      {{ p.qty }} x $ {{ p.price }} &nbsp;
+                      {{ p.qty }} x $ {{ p.data.price }} &nbsp;
                     </p>
                     <button class="button is-danger is-small" @click="$store.dispatch('removeFromCart', p.id)">
                       <span class="icon is-small is-left">

@@ -39,7 +39,7 @@
           <div class="card-content">
             <div class="content">
               <h3 class="title">{{ p.data.name }}</h3>
-              <p class="subtitle">$ {{ parseInt(p.data.price) }}</p>
+              <p class="subtitle">$ {{ (p.data.price)*p.qty }}</p>
               <!-- <div class="has-spacing-bottom"> -->
                 <!-- <div class="has-spacing-bottom">
                   <span class="tag is-medium">tortor</span>
