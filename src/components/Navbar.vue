@@ -3,8 +3,10 @@
     <div class="container">
     <!-- Brand -->
     <div class="navbar-brand">
-      <router-link to="/" class="navbar-item">
-        {{ brand }}
+      <router-link to="/" class="navbar-item ">
+        <a class="navbar-item">
+            <img src="../assets/mondk.png">
+          </a>
       </router-link>
       <a role="button"
       class="navbar-burger burger" aria-label="menu" aria-expanded="false"
@@ -119,6 +121,6 @@ export default {
 <style scoped>
 nav {
   height: 3.25rem;
-  background-color: rgba(31, 202, 74, 0.219);
+  background-color: rgba(19, 2, 41, 0.219);
 }
 </style>

@@ -1,14 +1,15 @@
 <template>
   <div class="container">
-    <section class="hero is-primary is-bold">
+    <section class="hero is-fullheight-with-navbar has-background-light is-bold">
       <div class="hero-body">
         <div class="container">
+          
           <div style="display: inline-block;">
             <h1 class="title">
               Nuestros Productos
             </h1>
             <h2 class="subtitle">
-              Primary subtitle
+              
             </h2>
           </div>
           <div class="is-pulled-right" style="display: inline-block;">
@@ -126,5 +127,8 @@ export default {
     width: 2rem;
     cursor: pointer;
   }
+}
+section{
+ 
 }
 </style>
