@@ -1,10 +1,11 @@
 <template>
   <div class="container">
-    <section class="hero is-fullheight-with-navbar has-background-light is-bold">
+    <section class="hero is-bold">
       <div class="hero-body">
         <div class="container">
           
-          <div style="display: inline-block;">
+          <div  style="display: inline-block;">
+            
             <h1 class="title">
               Nuestros Productos
             </h1>
@@ -31,7 +32,7 @@
     <div class="columns is-multiline">
       <div class="column is-4" v-for="p in computedProductList" :key="p.id">
         <!-- Item -->
-        <div class="card has-equal-height">
+        <div class="card has-equal-height mt-6">
           <div class="image-card">
             <div class="image has-spacing image is-16by9">
               <img alt="product logo" :src="p.data.picture">
@@ -129,6 +130,6 @@ export default {
   }
 }
 section{
- 
+ background-color: #ED9122;
 }
 </style>

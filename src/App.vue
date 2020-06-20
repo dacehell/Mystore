@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="has-background-grey-lighter">
     <navbar :brand="'My Store'"/>
     <router-view/>
   </div>
@@ -16,5 +16,7 @@ export default {
 </script>
 
 
-<style lang="scss">
+<style scope>
+
+
 </style>

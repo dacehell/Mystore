@@ -121,6 +121,6 @@ export default {
 <style scoped>
 nav {
   height: 3.25rem;
-  background-color: rgba(19, 2, 41, 0.219);
+  background-color:#E2231A;
 }
 </style>
