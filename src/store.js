@@ -1,68 +1,56 @@
+// Apartado donde se importan vue, axios y vuex (CRUD)
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 
-Vue.use(Vuex)
+Vue.use(Vuex) //uso de vuex
 
+// Funciones globales que seran llamados en las acciones
 function setInStorage(key, obj) {
-  localStorage.setItem(key, JSON.stringify(obj))
+  localStorage.setItem(key, JSON.stringify(obj)) //enviar producto al carrito
 }
 function getFromStorage(key) {
-  return JSON.parse(localStorage.getItem(key))
+  return JSON.parse(localStorage.getItem(key)) //muostrar items carrito
 }
-function getCartTotal(productsList) {
+function getCartTotal(productsList) { //obtener total 
   let price = 0.0
   productsList.forEach(p => {
     price += p.data.price * p.qty
   })
   return price
 }
-function newCart() {
+function newCart() { //resetear carrito
   return {
     list: [],
     total: 0.0,
   }
 }
 
-// function emptyProduct() { return { data: { name: '', picture: '', price: ''}, id: null } }
-
 export default new Vuex.Store({
-  state: {
+  state: { // la fuente de datos de los componentes
     // User
     currentUser: getFromStorage('user') || undefined,
     // Cart
     shoppingCart: getFromStorage('cart') || newCart(),
     showCart: false,
     products: [],
-    // currentProduct: emptyProduct(),
     loading: false,
     edit: false
   },
-  mutations: {
-    // SET_EMPTY_PRODUCT(state) {
-    //   state.currentProduct.id = null;
-    //   const base = emptyProduct()
-    //   Object.keys(base.data).forEach(key => {
-    //     state.currentProduct.data[key] = base.data[key]
-    //   })
-    // },
+  mutations: { //funciones que modifican los estados (metodos)
+   
     SET_CURRENT_PRODUCT(state, product){state.currentProduct = product},
-    LOADING_PRODUCTS(state) {
-      state.loading = !state.loading
-    },
-
-    GET_PRODUCTS(state, products){
-      state.products = []
-      products.forEach((prod) => {
+    LOADING_PRODUCTS(state) {state.loading = !state.loading},
+    GET_PRODUCTS(state, products){state.products = []
+        products.forEach((prod) => {
         prod['qty'] = 1
         state.products.push(prod)
       })
       state.loading = false
     },
     // User
-    UPDATE_CURR_USER(state, user) {
-      state.currentUser = user
-      setInStorage('user', user)
+    UPDATE_CURR_USER(state, user) {state.currentUser = user 
+    setInStorage('user', user)
     },
     // Cart
     ADD_TO_CART(state, product) {
@@ -104,7 +92,9 @@ export default new Vuex.Store({
       state.edit = !state.edit
     }
   },
-  actions: {
+
+
+  actions: {     // las acciones ejecutan las  mutaciones las cuales realizan el cambio y realizan operaciones asincronas
     // User
     updateUser ({commit}, user) {
       return new Promise((resolve, reject) => {
@@ -151,7 +141,7 @@ export default new Vuex.Store({
       commit("LOADING_PRODUCTS")
       axios.get('https://us-central1-tdd3-4e714.cloudfunctions.net/products/products', 
       { headers: {"Content-type": "text/plain"}}).then((accept) => {
-        // commit('SET_EMPTY_PRODUCT')
+        
         let data = accept.data;
         commit('GET_PRODUCTS', data)
       })
@@ -160,7 +150,7 @@ export default new Vuex.Store({
       commit('UPDATE_EDIT')
     }
   },
-  getters: {
+  getters: { //son metodos computados
     // User
     isLoggedIn: state => !!state.currentUser,
     currentUser: state => state.currentUser,

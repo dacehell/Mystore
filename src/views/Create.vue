@@ -34,19 +34,13 @@
         <p class="typo__p" v-if="submitStatus === 'ERROR'">Please fill the form correctly.</p>
         <p class="typo__p" v-if="submitStatus === 'PENDING'">Sending...</p>
 
-<!-- <tree-view :data="$v.name" :options="{rootObjectKey: '$v.name', maxDepth: 2}"></tree-view> -->
-    
-
-        <!-- <input  type="text" v-model="name" placeholder='ingrese producto' required>
-        <input  v-model="price" placeholder='ingrese el valor' required>
-        <input type='text' v-model="picture" placeholder='ingrese la imagen' required> -->
 <button class=" button is-success" @click="createProduct">Añadir</button>
         
         <button class="button btn-danger" v-if="edit" @click="updateProduct(id)">Actualizar</button>
         </form>
 
         
-                <!-- @click="deleteItem(p['.key'])" -->
+             
         
     
     <div class="mt-6 container box">
@@ -69,12 +63,12 @@
             <td>{{ p.data.picture.substring(0,50) }}</td>
             <td>
               <button class="button btn-success" @click='editProduct(p.id)'>Editar</button>
-              <!-- @click="editItem(p['.key'])"  -->
+              
               <div class="is-clearfix"></div>
             </td>
             <td>
               <button class="button btn-danger" @click='deleteProduct(p.id)'>Borrar</button>
-                <!-- @click="deleteItem(p['.key'])" -->
+               
               <div class="is-clearfix"></div>
             </td>
             
