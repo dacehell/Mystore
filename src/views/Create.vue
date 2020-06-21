@@ -1,10 +1,10 @@
 <template>
     <div>
         <form @submit.prevent="submit" class="container box">
-            <!-- <span v-if="formHasErrors" class="has-text-danger">
+            <span v-if="formHasErrors" class="has-text-danger">
                 <i class="mdi mdi-alert"></i>
-                Usuario o Contraseña incorrectos, Intente nuevamente.
-              </span> -->
+                Ingresar todos los campos
+              </span>
          <div class="form-group" :class="{ 'form-group--error': $v.name.$error }">
             <label class="form__label">Name</label>
             <input class="form__input input is-rounded is-warning" v-model.trim="$v.name.$model" v-model="name" placeholder='Ingrese el nombre'/>
@@ -100,8 +100,8 @@ export default {
             picture:'',
             price:'',
             id: undefined,
-            submitStatus:null
-            //formHasErrors: false
+            submitStatus:null,
+            formHasErrors: false
            
         }
     },
@@ -124,11 +124,6 @@ export default {
 
     },  
 
-
-
-
-
-
     methods: {
         ...mapActions(['updateEdit']),
 
@@ -145,27 +140,27 @@ export default {
           this.submitStatus = 'OK'
         }, 500)
       }
-    // isValid(){
-    //     if (this.name && this.price) {
-    //       this.formHasErrors = false
-    //     return true;
-    //       }
-    //       this.formHasErrors = [];
-    //       if (!this.name) {
-    //         this.formHasErrors
-    //       }
-    //       if (!this.price ) {
-    //         this.formHasErrors
-    //       } 
-    //      }
-        },
+    },
+    isValid(){
+        if (this.name && this.price) {
+          this.formHasErrors = false
+        return true;
+          }
+          this.formHasErrors = [];
+          if (!this.name) {
+            this.formHasErrors
+          }
+          if (!this.price ) {
+            this.formHasErrors
+          } 
+         },
         createProduct(){
             let add = {
                 name: this.name,
                 picture: this.picture,
                 price: this.price
             }
-          //  if(this.isValid()){
+          if(this.isValid()){
         axios.post('https://us-central1-tdd3-4e714.cloudfunctions.net/products/product',add, {headers:{'content-type':'application/json'}})
     .then(() => {
                 this.name = ''
@@ -178,7 +173,7 @@ export default {
             .catch(function(error) {
                 console.log(error);
             });
-    //}
+    }
         
     },
     deleteProduct(id){
