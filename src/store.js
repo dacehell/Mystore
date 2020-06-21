@@ -24,6 +24,8 @@ function newCart() {
   }
 }
 
+// function emptyProduct() { return { data: { name: '', picture: '', price: ''}, id: null } }
+
 export default new Vuex.Store({
   state: {
     // User
@@ -32,10 +34,19 @@ export default new Vuex.Store({
     shoppingCart: getFromStorage('cart') || newCart(),
     showCart: false,
     products: [],
+    // currentProduct: emptyProduct(),
     loading: false,
     edit: false
   },
   mutations: {
+    // SET_EMPTY_PRODUCT(state) {
+    //   state.currentProduct.id = null;
+    //   const base = emptyProduct()
+    //   Object.keys(base.data).forEach(key => {
+    //     state.currentProduct.data[key] = base.data[key]
+    //   })
+    // },
+    SET_CURRENT_PRODUCT(state, product){state.currentProduct = product},
     LOADING_PRODUCTS(state) {
       state.loading = !state.loading
     },
@@ -140,6 +151,7 @@ export default new Vuex.Store({
       commit("LOADING_PRODUCTS")
       axios.get('https://us-central1-tdd3-4e714.cloudfunctions.net/products/products', 
       { headers: {"Content-type": "text/plain"}}).then((accept) => {
+        // commit('SET_EMPTY_PRODUCT')
         let data = accept.data;
         commit('GET_PRODUCTS', data)
       })

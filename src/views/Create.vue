@@ -1,20 +1,56 @@
 <template>
     <div>
-        <div>
-        <input type='text' v-model="name" placeholder='ingrese producto'>
-        <input type='number' v-model="price" placeholder='ingrese el valor'>
-        <input type='text' v-model="picture" placeholder='ingrese la imagen'>
-
+        <form @submit.prevent="submit" class="container box">
+            <!-- <span v-if="formHasErrors" class="has-text-danger">
+                <i class="mdi mdi-alert"></i>
+                Usuario o Contraseña incorrectos, Intente nuevamente.
+              </span> -->
+         <div class="form-group" :class="{ 'form-group--error': $v.name.$error }">
+            <label class="form__label">Name</label>
+            <input class="form__input input is-rounded is-warning" v-model.trim="$v.name.$model" v-model="name" placeholder='Ingrese el nombre'/>
         </div>
+        <div class="error" v-if="!$v.name.required">Field is required</div>
+        <div class="error" v-if="!$v.name.minLength">Name must have at least {{$v.name.$params.minLength.min}} letters.</div>
+        <div class="error" v-if="!$v.name.maxnLength">Name must have at 30 character max {{$v.name.$params.maxLength.min}} letters.</div>
 
-        <button @click="createProduct">Añadir</button>
+         <div class="form-group" :class="{ 'form-group--error': $v.price.$error }">
+            <label class="form__label">Price</label>
+            <input class="form__input input is-rounded is-warning" v-model.trim="$v.price.$model" v-model="price" placeholder='ingrese el valor'/>
+        </div>
+        <div class="error" v-if="!$v.price.required">Field is required</div>
+        <div class="error" v-if="!$v.price.numeric">Price must have numeric</div> 
+
+        <div class="form-group" :class="{ 'form-group--error': $v.picture.$error }">
+            <label class="form__label">Picture</label>
+            <input class="form__input input is-rounded is-warning" v-model.trim="$v.picture.$model" v-model="picture" placeholder='ingrese imagen'/>
+        </div>
+        <div class="error" v-if="!$v.picture.required">Field is required</div>
+        <div class="error" v-if="!$v.picture.minLength">Name must have at least {{$v.picture.$params.minLength.min}} letters.</div>
+        <div class="error" v-if="!$v.picture.maxnLength">Name must have at 800 character max {{$v.picture.$params.maxLength.min}} letters.</div>
+
+
+        
+        <p class="typo__p" v-if="submitStatus === 'OK'">Thanks for your submission!</p>
+        <p class="typo__p" v-if="submitStatus === 'ERROR'">Please fill the form correctly.</p>
+        <p class="typo__p" v-if="submitStatus === 'PENDING'">Sending...</p>
+
+<!-- <tree-view :data="$v.name" :options="{rootObjectKey: '$v.name', maxDepth: 2}"></tree-view> -->
+    
+
+        <!-- <input  type="text" v-model="name" placeholder='ingrese producto' required>
+        <input  v-model="price" placeholder='ingrese el valor' required>
+        <input type='text' v-model="picture" placeholder='ingrese la imagen' required> -->
+<button class=" button is-success" @click="createProduct">Añadir</button>
         
         <button class="button btn-danger" v-if="edit" @click="updateProduct(id)">Actualizar</button>
+        </form>
+
+        
                 <!-- @click="deleteItem(p['.key'])" -->
         
     
-    <div>
-    <h1>Listar Productos</h1>
+    <div class="mt-6 container box">
+    <h1 class="is-size-3 mb-4">Listar Productos</h1>
     <table class="table table-striped">
       <thead>
         <tr>
@@ -52,34 +88,97 @@
 <script>
 import axios from 'axios'
 import {mapState, mapActions} from 'vuex'
+import { required, minLength, maxLength, numeric } from 'vuelidate/lib/validators'
+
+
 
 export default {
+    
     data(){
         return {
             name:'',
             picture:'',
             price:'',
-            id: undefined
+            id: undefined,
+            submitStatus:null
+            //formHasErrors: false
+           
         }
-    }, 
+    },
+   validations: { 
+      name: {
+          required,
+          minLength: minLength(3),
+          maxLength: maxLength(30),
+        },
+        picture: {
+           required,
+          minLength: minLength(3),
+          maxLength: maxLength(800), 
+        },
+        price: {
+            required,
+            numeric,
+        }
+          
+
+    },  
+
+
+
+
+
 
     methods: {
         ...mapActions(['updateEdit']),
+
+        submit() {
+      console.log('submit!')
+      this.$v.$touch()
+      if (this.$v.$invalid) {
+        this.submitStatus = 'ERROR'
+      } else {
+        // do your submit logic here
+        
+        this.submitStatus = 'PENDING'
+        setTimeout(() => {
+          this.submitStatus = 'OK'
+        }, 500)
+      }
+    // isValid(){
+    //     if (this.name && this.price) {
+    //       this.formHasErrors = false
+    //     return true;
+    //       }
+    //       this.formHasErrors = [];
+    //       if (!this.name) {
+    //         this.formHasErrors
+    //       }
+    //       if (!this.price ) {
+    //         this.formHasErrors
+    //       } 
+    //      }
+        },
         createProduct(){
             let add = {
                 name: this.name,
                 picture: this.picture,
                 price: this.price
             }
+          //  if(this.isValid()){
         axios.post('https://us-central1-tdd3-4e714.cloudfunctions.net/products/product',add, {headers:{'content-type':'application/json'}})
-    .then((response) => {
-        console.log(response);
-        this.$store.dispatch('getProducts')
-    })
-    .catch(function(error) {
-        console.log(error);
-    });
-
+    .then(() => {
+                this.name = ''
+                this.price = ''
+                this.picture = ''
+                this.id = ''
+        this.$store.dispatch('getProducts');
+        
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+    //}
         
     },
     deleteProduct(id){
@@ -122,7 +221,7 @@ export default {
                 this.price = ''
                 this.picture = ''
                 this.id = ''
-                this.$store.dispatch('getProducts')
+                this.$store.dispatch('getProducts');
     })
     .catch(function(error) {
         console.log(error);

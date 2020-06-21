@@ -4,6 +4,8 @@ import router from './router'
 import store from './store'
 import Firebase from 'firebase';
 import firebaseConfig from "@/firebase";
+import Vuelidate from 'vuelidate';
+Vue.use(Vuelidate);
 
 Firebase.initializeApp(firebaseConfig)
 
