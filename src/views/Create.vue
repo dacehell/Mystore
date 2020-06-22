@@ -4,7 +4,7 @@
             <span v-if="formHasErrors" class="has-text-danger">
                 <i class="mdi mdi-alert"></i>
                 Ingresar todos los campos
-              </span>
+            </span>
          <div class="form-group" :class="{ 'form-group--error': $v.name.$error }">
             <label class="form__label">Name</label>
             <input class="input is-rounded is-warning" v-model.trim="$v.name.$model" v-model="name" placeholder='Ingrese el nombre'/>
@@ -14,7 +14,7 @@
         <tree-view :data="$v.name" :options="{rootObjectKey: '$v.name', maxDepth: 2}"></tree-view>
         
 
-         <div class="form-group" :class="{ 'form-group--error': $v.price.$error }">
+        <div class="form-group" :class="{ 'form-group--error': $v.price.$error }">
             <label class="form__label">Price</label>
             <input class="form__input input is-rounded is-warning" v-model.trim="$v.price.$model" v-model="price" placeholder='ingrese el valor'/>
         </div>
@@ -35,7 +35,7 @@
         <p class="typo__p" v-if="submitStatus === 'ERROR'">Please fill the form correctly.</p>
         <p class="typo__p" v-if="submitStatus === 'PENDING'">Sending...</p>
 
-<button class=" button is-success is-rounded" @click="createProduct">Añadir</button>
+        <button class=" button is-success is-rounded" @click="createProduct">Añadir</button>
         
         <button class="button is-info ml-4 is-rounded" v-if="edit" @click="updateProduct(id)">Actualizar</button>
         </form>
@@ -44,39 +44,39 @@
              
         
     
-    <div class="mt-6 container box">
-    <h1 class="is-size-3 mb-4">Listar Productos</h1>
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>id</th>
-          <th>Nombre Producto</th>
-          <th>Precio</th>
-          <th>Imagen</th>
-          <th colspan="2" class="action">Acción</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr v-for="p in computedProductList" :key="p.id">
-            <td>{{ p.id }}</td>
-            <td>{{ p.data.name }}</td>
-            <td>{{ p.data.price }}</td>
-            <td>{{ p.data.picture.substring(0,50) }}</td>
-            <td>
-              <button class="button is-success is-rounded" @click='editProduct(p.id)'>Editar</button>
-              
-              <div class="is-clearfix"></div>
-            </td>
-            <td>
-              <button class="button is-danger is-rounded" @click='deleteProduct(p.id)'>Borrar</button>
-               
-              <div class="is-clearfix"></div>
-            </td>
-            
-          </tr>
-      </tbody>
-    </table>
-  </div>
+        <div class="mt-6 container box">
+        <h1 class="is-size-3 mb-4">Listar Productos</h1>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>id</th>
+              <th>Nombre Producto</th>
+              <th>Precio</th>
+              <th>Imagen</th>
+              <th colspan="2" class="action">Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr v-for="p in computedProductList" :key="p.id">
+                <td>{{ p.id }}</td>
+                <td>{{ p.data.name }}</td>
+                <td>{{ p.data.price }}</td>
+                <td>{{ p.data.picture.substring(0,50) }}</td>
+                <td>
+                  <button class="button is-success is-rounded" @click='editProduct(p.id)'>Editar</button>
+                  
+                  <div class="is-clearfix"></div>
+                </td>
+                <td>
+                  <button class="button is-danger is-rounded" @click='deleteProduct(p.id)'>Borrar</button>
+                  
+                  <div class="is-clearfix"></div>
+                </td>
+                
+              </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 

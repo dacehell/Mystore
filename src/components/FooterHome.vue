@@ -1,15 +1,14 @@
 <template>
   <div>
       <footer class="footer mt-6">
-  <div class="content has-text-centered">
-    <p>
-      <strong>MONDK</strong> by <a href="#">David Caldera</a>. The source code is licensed
-      <a href="#">Github <span class="icon">
-        <font-awesome-icon :icon="['fab', 'fa-github']" />
-      
-    </span></a>
-    </p>
-  </div>
+          <div class="content has-text-centered">
+            <p>
+              <strong>MONDK</strong> by <a href="#">David Caldera</a>. The source code is licensed
+              <a href="#">Github <span class="icon">
+                                      <font-awesome-icon :icon="['fab', 'fa-github']" />
+                                  </span></a>
+            </p>
+          </div>
       </footer>
   </div>
 </template>
