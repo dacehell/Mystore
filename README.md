@@ -1,4 +1,6 @@
-# my_store
+#My Store MONDK
+
+###This project refers to an implementation of a store with its shopping cart, as the final challenge of bootcamp Desafio Latam, the page is under construccion and not finish yet
 
 ## Project setup
 ```
@@ -35,5 +37,7 @@ npm run test:e2e
 npm run test:unit
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+###the page can be seen at the following address
+####https://tdd3-4e714.web.app/
+
+22 de junio de 2020 1:12
