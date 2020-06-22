@@ -35,12 +35,15 @@ export default new Vuex.Store({
     showCart: false,
     products: [],
     loading: false,
-    edit: false
+    edit: false,
+    overlay: false
   },
   mutations: { //funciones que modifican los estados (metodos)
    
     SET_CURRENT_PRODUCT(state, product){state.currentProduct = product},
     LOADING_PRODUCTS(state) {state.loading = !state.loading},
+    DISPLAY_OVERLAY(state) {state.overlay = true},
+    HIDE_OVERLAY(state) {state.overlay = false},
     GET_PRODUCTS(state, products){state.products = []
         products.forEach((prod) => {
         prod['qty'] = 1
@@ -129,21 +132,24 @@ export default new Vuex.Store({
       })
     },
     updateShowCart({commit}, val) {
-      console.log('setting showCart to ', val)
+      //console.log('setting showCart to ', val)
       return new Promise((resolve, reject) => {
         try {
-          commit('UPDATE_SHOW_CART', !!val) // !! double-negation for Boolen casting
+          commit('UPDATE_SHOW_CART', !!val) // !! double-negation for Boolean casting
           resolve(true)
         } catch(e) { reject(e) }
       })
     },
     getProducts({commit}){
+      commit('DISPLAY_OVERLAY')
       commit("LOADING_PRODUCTS")
       axios.get('https://us-central1-tdd3-4e714.cloudfunctions.net/products/products', 
       { headers: {"Content-type": "text/plain"}}).then((accept) => {
         
         let data = accept.data;
         commit('GET_PRODUCTS', data)
+      }).finally(() => {
+        commit('HIDE_OVERLAY')
       })
     },
     updateEdit({commit}) {

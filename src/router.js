@@ -33,13 +33,19 @@ const router = new Router({
     {
       path: '/create',
       name: 'create',
-      component: Create
+      component: Create,
+      alias:['/crear']
     },
     {
       path: '/login',
       name: 'login',
       component: () => import(/* webpackChunkName: "login" */ './views/Login.vue')
-    }
+    },
+    {
+      path: '*',
+      name: 'NotFound', 
+      component: () => import('./views/NotFound.vue')
+    },
   ]
 })
 router.beforeEach((to, from, next) => {

@@ -1,17 +1,18 @@
 <template>
     <div>
-        <form @submit.prevent="submit" class="container box">
+        <form @submit.prevent="submit" class="container box mt-6">
             <span v-if="formHasErrors" class="has-text-danger">
                 <i class="mdi mdi-alert"></i>
                 Ingresar todos los campos
               </span>
          <div class="form-group" :class="{ 'form-group--error': $v.name.$error }">
             <label class="form__label">Name</label>
-            <input class="form__input input is-rounded is-warning" v-model.trim="$v.name.$model" v-model="name" placeholder='Ingrese el nombre'/>
+            <input class="input is-rounded is-warning" v-model.trim="$v.name.$model" v-model="name" placeholder='Ingrese el nombre'/>
         </div>
         <div class="error" v-if="!$v.name.required">Field is required</div>
-        <div class="error" v-if="!$v.name.minLength">Name must have at least {{$v.name.$params.minLength.min}} letters.</div>
-        <div class="error" v-if="!$v.name.maxnLength">Name must have at 30 character max {{$v.name.$params.maxLength.min}} letters.</div>
+        <div class="error" v-if="!$v.name.alpha">Name must have alpha</div>
+        <tree-view :data="$v.name" :options="{rootObjectKey: '$v.name', maxDepth: 2}"></tree-view>
+        
 
          <div class="form-group" :class="{ 'form-group--error': $v.price.$error }">
             <label class="form__label">Price</label>
@@ -25,8 +26,8 @@
             <input class="form__input input is-rounded is-warning" v-model.trim="$v.picture.$model" v-model="picture" placeholder='ingrese imagen'/>
         </div>
         <div class="error" v-if="!$v.picture.required">Field is required</div>
-        <div class="error" v-if="!$v.picture.minLength">Name must have at least {{$v.picture.$params.minLength.min}} letters.</div>
-        <div class="error" v-if="!$v.picture.maxnLength">Name must have at 800 character max {{$v.picture.$params.maxLength.min}} letters.</div>
+        <div class="error" v-if="!$v.picture.minLength">Picture must have at least {{$v.picture.$params.minLength.min}} letters.</div>
+        <div class="error" v-if="!$v.picture.maxnLength">Picture must have at 800 character max {{$v.picture.$params.maxLength.min}} letters.</div>
 
 
         
@@ -34,9 +35,9 @@
         <p class="typo__p" v-if="submitStatus === 'ERROR'">Please fill the form correctly.</p>
         <p class="typo__p" v-if="submitStatus === 'PENDING'">Sending...</p>
 
-<button class=" button is-success" @click="createProduct">Añadir</button>
+<button class=" button is-success is-rounded" @click="createProduct">Añadir</button>
         
-        <button class="button btn-danger" v-if="edit" @click="updateProduct(id)">Actualizar</button>
+        <button class="button is-info ml-4 is-rounded" v-if="edit" @click="updateProduct(id)">Actualizar</button>
         </form>
 
         
@@ -62,12 +63,12 @@
             <td>{{ p.data.price }}</td>
             <td>{{ p.data.picture.substring(0,50) }}</td>
             <td>
-              <button class="button btn-success" @click='editProduct(p.id)'>Editar</button>
+              <button class="button is-success is-rounded" @click='editProduct(p.id)'>Editar</button>
               
               <div class="is-clearfix"></div>
             </td>
             <td>
-              <button class="button btn-danger" @click='deleteProduct(p.id)'>Borrar</button>
+              <button class="button is-danger is-rounded" @click='deleteProduct(p.id)'>Borrar</button>
                
               <div class="is-clearfix"></div>
             </td>
@@ -82,7 +83,7 @@
 <script>
 import axios from 'axios'
 import {mapState, mapActions} from 'vuex'
-import { required, minLength, maxLength, numeric } from 'vuelidate/lib/validators'
+import { required, minLength, maxLength, numeric, alpha } from 'vuelidate/lib/validators'
 
 
 
@@ -102,8 +103,9 @@ export default {
    validations: { 
       name: {
           required,
-          minLength: minLength(3),
-          maxLength: maxLength(30),
+          alpha,
+          //minLength: minLength(3),
+          //maxLength: maxLength(30),
         },
         picture: {
            required,
@@ -122,7 +124,7 @@ export default {
         ...mapActions(['updateEdit']),
 
         submit() {
-      console.log('submit!')
+     
       this.$v.$touch()
       if (this.$v.$invalid) {
         this.submitStatus = 'ERROR'
@@ -165,7 +167,7 @@ export default {
         
             })
             .catch(function(error) {
-                console.log(error);
+                newFunction(error)
             });
     }
         
@@ -213,7 +215,7 @@ export default {
                 this.$store.dispatch('getProducts');
     })
     .catch(function(error) {
-        console.log(error);
+        newFunction(error);
     });
     }
     },
@@ -228,4 +230,8 @@ export default {
     },
     
 }
+
+  function newFunction(error) {
+    newFunction(error)
+  }
 </script>
