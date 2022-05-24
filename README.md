@@ -39,5 +39,7 @@ npm run test:unit
 
 ### the page can be seen at the following address
 #### https://tdd3-4e714.web.app/
+### user: caldera.david78@gmail.com 
+### password: 12345678
 
 22 de junio de 2020 1:12
